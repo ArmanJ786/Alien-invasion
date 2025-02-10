@@ -92,8 +92,16 @@ def run_game():
             # Update game sprites
             gf.update_game_sprites(ai_settings, screen, stats, sb, ship, aliens, bullets, cargoes, alien_bullets,
                                    health, hearts, shields)
+            
+            # Check and update high score if game over
+            if stats.score > stats.high_score:
+                stats.high_score = stats.score
+                stats.save_high_score()
+                sb.prep_high_score()
         else:
             pygame.event.set_grab(False)
+            stats.score = 0
+            sb.prep_score()
 
         gf.update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_button, credits_button,
                          back_button, screen_bg, screen_bg_2, cargoes, alien_bullets, health, hearts, shields)
